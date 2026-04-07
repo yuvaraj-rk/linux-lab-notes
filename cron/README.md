@@ -126,7 +126,7 @@ chmod +x script.sh
 
 ## 🔗 Recommended Tools
 
-Crontab.guru — helps translate cron expressions into readable text.
+[Crontab.guru](https://crontab.guru) — helps translate cron expressions into readable text.
 
 ---
 
