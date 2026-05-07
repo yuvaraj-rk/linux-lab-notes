@@ -79,3 +79,49 @@ ps aux | grep data_processor
 #When you run crontab -l, you should see your new backup job
 
 * * * * * tar -czf /home/labex/project/backups/backup-$(date +\%Y-\%m-\%d_\%H-\%M-\%S).tar.gz -C /home/labex/project data config logs
+
+#Add a line to print "Enter the backup filename: " to prompt the user for input.
+#Use the read command to capture the user's input into a new variable called BACKUP_FILENAME.
+#Add a final echo command to confirm the settings, displaying a message like "Backing up logs to: [filename]", where [filename] is the value entered by the user.
+
+read -p "Enter the backup filename: " BACKUP_FILENAME
+echo "Backing up logs to: $BACKUP_FILENAME"
+
+'''
+labex:project/ $ ./log_manager.sh 
+Enter the backup filename: daily_backup
+Backing up logs to: daily_backup
+'''
+
+#Tasks
+#First, create a directory named backups inside ~/project where the log files will be copied.
+#Modify your log_manager.sh script.
+#Add an if statement to check if the directory specified by the $LOG_DIR variable exists.
+#Inside the if block (where the directory is confirmed to exist), add a for loop.
+#The loop should iterate over every file ending in .log inside the $LOG_DIR directory.
+#Inside the loop, use the cp command to copy each log file into the ~/project/backups directory.
+#For each file copied, print a message like "Copied [filename]".
+
+LOG_DIR="/home/labex/project/app_logs"
+ 
+if [ -d "$LOG_DIR" ]; then
+    echo "Log directory found. Proceeding..."
+    read -p "Enter the backup filename: " BACKUP_FILENAME
+    echo "Backing up logs to: $BACKUP_FILENAME"
+    if [ -d "backups" ];then
+        rm -r "./backups"
+        exit 1
+    else
+        mkdir backups
+    fi
+ 
+    for file in $LOG_DIR/*.log;		#<<<<<<<<<<<<<<<<
+    do
+        cp $file "./backups/"
+        echo "Copied $file"
+    done
+    echo "Backup complete."
+else
+    echo "Error: Log directory not found."
+    exit 1
+fi
