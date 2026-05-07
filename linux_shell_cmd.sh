@@ -1,14 +1,17 @@
 echo "Hello, World!"
 id
 
-Identify current user name
+#Identify current user name
 whoami
 
-Display the kernel name:
+#Display the kernel name:
 uname
 
-Display all system information
+#Display all system information
 uname -a
+
+#Change Directory - to return to previous folder (like backspace in browser)
+cd -
 
 Find Related Commands
 apropos <cmd name> 
@@ -53,6 +56,20 @@ Engineering 1001 John ENG
 Marketing 1002 Sarah MKT
 -1 3 tells join to use the third field from the first file (employees.txt) as the join field
 -2 1 tells it to use the first field from the second file (departments.txt) as the join field
+
+#List all executables present in the directories as part of PATH variable
+which -a python
+
+#Print Binary location of the command
+whereis -b grep
+whereis -b nonexistent
+#Print manual page location of the command
+whereis -m ssh
+#binary+manual
+whereis -bm python3
+#Print source code location of the command
+whereis -s bash
+
 
 Add a new user:
 sudo useradd joker
@@ -231,14 +248,48 @@ END {
 }
 EOF
 
-To Create directories
-mkdir dir1 dir2 ...
 
-To move files/directories
-mv src dest
+#Create directory with permission
+mkdir -m 700 new_folder
 
-To create copies
-cp src(fullpath) dest(fullpath)
+#Create nested directory structures using the -p option
+mkdir -p ~/project/digital_garden/projects/web_app/src/components
+
+#To Create directories
+mkdir -v dir1 dir2 ...
+v - print verbose output about status of creation of directories
+
+#Combine all options to create directories
+mkdir -pvm 750 ~/project/digital_garden/projects/research_paper/drafts ~/project/digital_garden/projects/research_paper/references
+
+
+#Visually see the directory tree structure in the terminal (very useful to understand folder structure)
+tree -p dir
+#example output
+labex:~/ $ tree project
+project
+├── backend
+│   ├── api
+│   └── database
+└── frontend
+    ├── css
+    └── js
+
+
+#To move files/directories
+mv -iv src dest
+i - interactive and ask confirmation if req. overwrite existing file
+v - verbose mode
+
+#To create copies
+cp -r src(fullpath) dest(fullpath)
+
+#To preserve file attributes
+cp -p file file_copy
+
+#Other useful options for cp command
+-l: Create hard links instead of copying files
+-s: Create symbolic links instead of copying files
 
 List contents of directories
 ls
@@ -294,6 +345,12 @@ cat is a command that displays the contents of a file
 
 cat ~/project/punctuated.txt | tr -d '[:punct:]'
 cat ~/project/encoded.txt | tr 'b-za-a' 'a-z'
+
+Follow new changes as written to the file in real-time (press Ctrl+C to exit)
+tail -f file.txt
+To view file from specific line number: (show file content from 20th line to end of file)
+tail -n +20 file.txt
+
 tr 'b-za-a' 'a-z':
 The first set 'b-za-a' consists of:
 'b-z': letters b through z
@@ -365,7 +422,31 @@ difference files & directories
 diff file1 file2
 diff -r server1_files server2_files > missing_files.txt
 
-Car tar archive:
+diff script_v1.py script_v2.py
+
+#Show differences similar format to code changes in git (important learning)
+diff -u script_v1.py script_v2.py
+
+#Ignore whitespaces
+diff -w script_v2.py script_v3.py
+
+#Recursively compare directories
+diff -r dir1 dir2
+#Side-by-Side content comparison
+diff -y script_v1.py script_v2.py
+
+#Create and extract zip archive
+zip -r destination-zip-file.zip source-file_or_dir
+
+#Extract archives to current dir
+unzip path/to/archive1.zip path/to/archive2.zip
+#Extract archives to specific dir
+unzip path/to/archive1.zip path/to/archive2.zip -d path/to/output
+
+#List contents of zip archive
+unzip -l /tmp/Archive.zip
+
+#Car tar archive:
 tar -cvzf home_backup.tar /home
 
 Gzip archive -z option: (use sudo if elevated access required)
