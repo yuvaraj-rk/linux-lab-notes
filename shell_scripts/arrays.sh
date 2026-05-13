@@ -8,6 +8,7 @@ STRINGS=()
 NAMES=()
 
 # Init arrays
+a=(3 5 8 10 6)
 NAMES=("Alice" "Bob" "Charlie" "David")
 
 # Add elements to NUMBERS array
